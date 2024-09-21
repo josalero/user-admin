@@ -1,0 +1,69 @@
+plugins {
+    id 'java'
+    id 'org.springframework.boot' version '3.3.2'
+    id 'io.spring.dependency-management' version '1.1.4'
+}
+
+group = 'com.josalero'
+version = '0.0.1-SNAPSHOT'
+
+java {
+}
+apply plugin: 'java'
+apply plugin: 'application'
+
+mainClassName = 'com.josalero.SpringbootKeycloakServerApplication'
+
+jar {
+    manifest {
+        attributes 'Implementation-Title': 'Keycloak Server',
+                'Implementation-Version': version,
+                'Main-Class': 'com.josalero.SpringbootKeycloakServerApplication'
+    }
+}
+
+configurations {
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+def keycloakVersion = "24.0.5"
+def infinispanVersion = "14.0.21.Final"
+def resteasyVersion = "6.2.10.Final"
+def micrometerVersion = "1.10.3"
+def liquibaseVersion = "4.28.0"
+def snakeyamlVersion = "2.6"
+def hibernateVersion = "6.2.7.Final"
+def postgresqlVersion = "42.7.1"
+
+
+dependencies {
+    implementation "org.springframework.boot:spring-boot-starter-web"
+    implementation "org.springframework.boot:spring-boot-starter-data-jpa"
+    implementation "org.hibernate:hibernate-core:${hibernateVersion}"
+    implementation "org.hibernate.orm:hibernate-c3p0:${hibernateVersion}"
+    implementation "io.micrometer:micrometer-registry-prometheus:${micrometerVersion}"
+    implementation "org.postgresql:postgresql:${postgresqlVersion}"
+    implementation "org.projectlombok:lombok"
+    implementation "org.jboss.resteasy:resteasy-servlet-initializer:${resteasyVersion}"
+    implementation "org.jboss.resteasy:resteasy-client:${resteasyVersion}"
+    implementation "org.jboss.resteasy:resteasy-jackson2-provider:${resteasyVersion}"
+    implementation "org.keycloak:keycloak-dependencies-server-all:${keycloakVersion}"
+    implementation "org.springframework.boot:spring-boot-configuration-processor"
+    implementation "org.keycloak:keycloak-crypto-default:${keycloakVersion}"
+    implementation "org.keycloak:keycloak-admin-ui:${keycloakVersion}"
+    implementation "org.keycloak:keycloak-rest-admin-ui-ext:${keycloakVersion}"
+    implementation "org.liquibase:liquibase-core:${liquibaseVersion}"
+    implementation "org.snakeyaml:snakeyaml-engine:${snakeyamlVersion}"
+    compileOnly 'org.projectlombok:lombok'
+    annotationProcessor 'org.projectlombok:lombok'
+}
+
+tasks.named('test') {
+    useJUnitPlatform()
+}

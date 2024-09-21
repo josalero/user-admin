@@ -1,0 +1,35 @@
+spring:
+  jpa:
+    defer-datasource-initialization: true
+    properties:
+      hibernate:
+        transaction:
+          jta:
+            platform: org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform
+  datasource:
+    username: ${DB_USERNAME:postgres}
+    password: ${DB_PASSWORD:postgres}
+    url: ${DB_URL:jdbc:postgresql://localhost:5434/flight-search?currentSchema=keycloak}
+
+keycloak:
+  server:
+    context-path: /auth
+    username: ${KEYCLOAK_ADMIN:admin}
+    password: ${KEYCLOAK_ADMIN_PASSWORD:admin}
+    context-redirect: true
+  connections-jpa:
+    url: ${DB_URL:jdbc:postgresql://localhost:5434/flight-search?currentSchema=keycloak}
+    driver: org.postgresql.Driver
+    driverDialect: org.hibernate.dialect.PostgreSQLDialect
+    user: ${DB_USERNAME:postgres}
+    password: ${DB_PASSWORD:postgres}
+    showSql: false
+    formatSql: false
+    poolSize: 20
+
+logging:
+  level:
+    root: INFO
+
+server:
+  port: ${PORT:8085}

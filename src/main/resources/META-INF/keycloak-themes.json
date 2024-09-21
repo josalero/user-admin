@@ -1,0 +1,10 @@
+{
+	"themes": [
+		{
+			"name": "trip-planner",
+			"types": [
+				"login", "email"
+			]
+		}
+	]
+}
