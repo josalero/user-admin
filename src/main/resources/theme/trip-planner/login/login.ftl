@@ -1,96 +1,46 @@
+
 <#import "template.ftl" as layout>
 <@layout.registrationLayout displayMessage=!messagesPerField.existsError('username','password') displayInfo=realm.password && realm.registrationAllowed && !registrationDisabled??; section>
-  <!--
-      Form section
-  -->
-  <#if section = "form">
-    <#if realm.password>
-
-      <!-- Title -->
-      <div 
-        class="text-subtitle1 text-center"
-        :class="{ 'q-pa-xs': $q.screen.xs, 'q-pa-sm': $q.screen.gt.xs }"
-      >
-          ${msg("loginAccountTitle")}
-      </div>
-      <!-- Content -->
-      <div class="full-width">
-        <q-form action="${url.loginAction}" method="post">
-          <#if !usernameHidden??>
-            <div class="q-py-xs column">
-              <q-input 
-                id="input-username" name="username" v-model="email" filled
-                label="<#if !realm.loginWithEmailAllowed>${msg('username')}<#elseif !realm.registrationEmailAsUsername>${msg('usernameOrEmail')}<#else>${msg('email')}</#if>"
-                type="<#if !realm.loginWithEmailAllowed>text<#elseif !realm.registrationEmailAsUsername>text<#else>mail</#if>" 
-                :error="<#if messagesPerField.existsError('username','password')>true<#else>false</#if>"
-                error-message="${kcSanitize(messagesPerField.getFirstError('username','password'))?no_esc}"
-                :hide-bottom-space="true"
-              />
+<div id="root">
+   <div class="main">
+      <nav class="navbar navbar-expand-lg navbar-dark">
+         <div class="container-fluid">
+            <button class="navbar-toggler" type="button"><span class="navbar-toggler-icon"></span></button>
+            <div class="collapse navbar-collapse">
+               <ul class="navbar-nav mr-auto">
+                  <li class="nav-item"></li>
+               </ul>
             </div>
-          </#if>
-          <div class="q-py-xs column">
-            <q-input 
-              id="input-password" name="password" v-model="password" label="${msg('password')}" filled :type="showPassword ? 'text' : 'password'" autocomplete="off" 
-              :error="<#if usernameHidden?? && messagesPerField.existsError('username')>true<#else>false</#if>"
-              error-message="${kcSanitize(messagesPerField.getFirstError('username','password'))?no_esc}"
-              :hide-bottom-space="true"
-            >
-              <template v-slot:append>
-                <q-icon :name="showPassword ? 'visibility' : 'visibility_off'" class="cursor-pointer" @click="showPassword = !showPassword" />
-              </template>
-            </q-input>
-          </div>
-          <!-- Options -->
-          <div class="row justify-between items-center no-wrap">
-            <#if realm.rememberMe && !usernameHidden??>
-              <div>
-                <q-toggle id="remember-me" name="rememberMe" v-model="rememberMe" false-value="off" true-value="on" label="${msg('rememberMe')}" />
-              </div>
-            </#if>
-            <#if realm.resetPasswordAllowed>
-              <div>
-                <q-btn id="reset-password" label="${msg('doForgotPassword')}" color="accent" flat rounded no-caps href="${url.loginResetCredentialsUrl}" />
-              </div>
-            </#if>
-          </div>
-          <!-- Submit actions -->
-          <div 
-            class="row justify-center"
-            :class="{ 'q-pa-sm': $q.screen.xs, 'q-pa-md': $q.screen.gt.xs }"
-          >
-            <q-btn id="login" name="login" label="${msg('doLogin')}" color="primary" :loading="loginLoading" @click="loginLoading = true" type="submit" />
-          </div>
-        </q-form>
+         </div>
+      </nav>
+      <div class="container d-flex align-items-center justify-content-center">
+         <div class="main-wrapper">
+            <img src="${url.resourcesPath}/img/logo.png" alt="plantripsai-logo" class="logo-img-card">
+            <div class="col-md-12 login-form">
+               <div class="card card-container">
+                  <form action="${url.loginAction}" method="post">
+                     <div class="form-group">
+                        <div class="wrapper">
+                           <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 512 512" class="icon" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg">
+                              <path d="M256 288c79.5 0 144-64.5 144-144S335.5 0 256 0 112 64.5 112 144s64.5 144 144 144zm128 32h-55.1c-22.2 10.2-46.9 16-72.9 16s-50.6-5.8-72.9-16H128C57.3 320 0 377.3 0 448v16c0 26.5 21.5 48 48 48h416c26.5 0 48-21.5 48-48v-16c0-70.7-57.3-128-128-128z"></path>
+                           </svg>
+                           <input name="username" type="text" placeholder="Username" class="form-control input" value=""/>
+                        </div>
+                     </div>
+                     <div class="form-group">
+                        <div class="wrapper">
+                           <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 448 512" class="icon" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg">
+                              <path d="M400 224h-24v-72C376 68.2 307.8 0 224 0S72 68.2 72 152v72H48c-26.5 0-48 21.5-48 48v192c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48V272c0-26.5-21.5-48-48-48zm-104 0H152v-72c0-39.7 32.3-72 72-72s72 32.3 72 72v72z"></path>
+                           </svg>
+                           <input id="input-password" name="password" type="password" placeholder="Password" class="form-control input" value=""/>
+                        </div>
+                     </div>
+                     <div class="form-group btn-login"><button type="submit" class="btn btn-secondary btn-block mt-3"><span>Sign in</span></button></div>
+                  </form>
+               </div>
+            </div>
+         </div>
       </div>
-      <!-- Extra actions -->
-      <div class="column items-center">
-        <#if realm.password && realm.registrationAllowed && !registrationDisabled??>
-          <div class="row justify-center items-center">
-            <span>${msg('noAccount')}</span>
-            <q-btn id="register" label="${msg('doRegister')}" color="accent" flat rounded no-caps href="${url.registrationUrl}" />
-          </div>
-        </#if>
-      </div>
-    </#if>
-  <!--
-      SocialProviders sections
-  -->
-  <#elseif section = "socialProviders" >
-    <#if realm.password && social.providers??>
-      <hr style="width: 75%" />
-      <div 
-        class="column items-center"
-        :class="{ 'q-pb-xs': $q.screen.xs, 'q-pb-sm': $q.screen.gt.xs }"
-      >
-        <div class="text-subtitle1">
-            ${msg("identity-provider-login-label")}
-        </div>
-        <div class="q-pa-sm row jsutify-center">
-          <#list social.providers as p>
-            <q-btn label="${p.displayName!}" color="accent" href="${p.loginUrl}" />
-          </#list>
-        </div>
-      </div>
-    </#if>
-  </#if>
+   </div>
+</div>
 </@layout.registrationLayout>

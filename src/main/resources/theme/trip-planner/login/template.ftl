@@ -9,87 +9,14 @@
   <meta charset="utf-8">
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
   <meta name="robots" content="noindex, nofollow">
-
-  <#if properties.meta?has_content>
-    <#list properties.meta?split(' ') as meta>
-      <meta name="${meta?split('==')[0]}" content="${meta?split('==')[1]}"/>
-    </#list>
-  </#if>
-  <title>${msg("loginTitle",(realm.displayName!''))}</title>
+  <title>Plan Your Trip</title>
   <link rel="icon" href="${url.resourcesPath}/img/favicon.ico" />
-  <#if properties.stylesCommon?has_content>
-    <#list properties.stylesCommon?split(' ') as style>
-      <link href="${url.resourcesCommonPath}/${style}" rel="stylesheet" />
-    </#list>
-  </#if>
-  <#if properties.styles?has_content>
-    <#list properties.styles?split(' ') as style>
-      <link href="${url.resourcesPath}/css/${style}" rel="stylesheet" />
-    </#list>
-  </#if>
-  <#if properties.scripts?has_content>
-    <#list properties.scripts?split(' ') as script>
-      <script src="${url.resourcesPath}/js/${script}" type="text/javascript"></script>
-    </#list>
-  </#if>
-  <#if properties.version?has_content>
-    <script>
-      const themeVersion = '${properties.version}'
-    </script>
-  <#else>
-    <script>
-      const themeVersion = undefined
-    </script>
-  </#if>
-  <#if properties.kdkVersion?has_content>
-    <script>
-      const kdkVersion = '${properties.kdkVersion}'
-    </script>
-  <#else>
-    <script>
-      const kdkVersion = undefined
-    </script>      
-  </#if>
+  <link href="${url.resourcesPath}/css/site.css" rel="stylesheet" type="text/css">
+  <link href="${url.resourcesPath}/css/main.a480eef8.css" rel="stylesheet" type="text/css">
 </head>
 
 <body>
-  <div id="q-app">
-    <div class="window-height window-width row justify-center bg-grey-4">
-      <!-- 
-        Header 
-      -->
-      <div class="full-width row justify-center">
-        <#include "fragments/header.ftl">
-      </div>
-      <!-- 
-        Content 
-      -->
-      <div class="row justify-center" style="width: 600px; max-width: 95vw;"> 
-        <q-card class="full-width bg-white column justify-center">
-          <!-- banner -->
-          <div>
-            <#include "fragments/banner.ftl">
-          </div>
-          <!-- form -->
-          <div :class="{ 'q-pt-md q-pr-md q-pl-md': $q.screen.xs, 'q-pt-lg q-pr-lg q-pl-lg': $q.screen.gt.xs }"> 
-            <#nested "form">
-          </div>
-          <!-- social providers -->
-          <#nested "socialProviders">
-        </q-card>
-        <!-- global options -->
-        <div :class="{ 'q-pt-xs': $q.screen.xs, 'q-pt-sm': $q.screen.gt.xs }">
-          <#include "fragments/options.ftl">
-        </div>
-      </div>
-      <!-- 
-        Footer 
-      -->
-      <div class="full-width row justify-center">
-        <#include "fragments/footer.ftl">
-      </div>
-    </div>
-  </div>
+    <#nested "form">
   <!--
     Retrieve Keycloak environement
   -->
