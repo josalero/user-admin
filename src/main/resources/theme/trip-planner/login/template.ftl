@@ -12,7 +12,7 @@
   <title>Plan Your Trip</title>
   <link rel="icon" href="${url.resourcesPath}/img/favicon.ico" />
   <link href="${url.resourcesPath}/css/site.css" rel="stylesheet" type="text/css">
-  <link href="${url.resourcesPath}/css/main.a480eef8.css" rel="stylesheet" type="text/css">
+  <link href="${url.resourcesPath}/css/main.7b60edda.css" rel="stylesheet" type="text/css">
 </head>
 
 <body>

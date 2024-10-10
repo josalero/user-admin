@@ -35,8 +35,12 @@
                            <input id="input-password" name="password" type="password" placeholder="Password" class="form-control input" value=""/>
                         </div>
                      </div>
+                    <#if messagesPerField.existsError('username','password')>
+                        <div class="form-group btn-login forgot-password-link">${kcSanitize(messagesPerField.getFirstError('username','password'))?no_esc}</div>
+                    </#if>
                      <div class="form-group btn-login"><button type="submit" class="btn btn-secondary btn-block mt-3"><span>Sign in</span></button></div>
                   </form>
+                  <a class="btn-login nav-link forgot-password-link mt-3" href="${url.loginResetCredentialsUrl}">Forgot password?</a>
                </div>
             </div>
          </div>

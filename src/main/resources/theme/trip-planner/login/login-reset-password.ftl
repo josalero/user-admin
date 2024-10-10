@@ -1,38 +1,36 @@
 <#import "template.ftl" as layout>
 <@layout.registrationLayout displayInfo=true displayMessage=!messagesPerField.existsError('username'); section>
-  <!--
-      Form section
-  -->
-  <#if section = "form">
-    <!-- Title -->
-    <div 
-      class="text-center column items-center"
-      :class="{ 'q-pa-xs q-gutter-sm': $q.screen.xs, 'q-pa-sm q-gutter-md': $q.screen.gt.xs }"
-    >
-      <div class="text-subtitle1">${msg("emailForgotTitle")}</div>
-      <div>${msg("emailInstruction")}</div>
+
+    <div id="root">
+       <div class="main">
+          <nav class="navbar navbar-expand-lg navbar-dark">
+             <div class="container-fluid">
+                <button class="navbar-toggler" type="button"><span class="navbar-toggler-icon"></span></button>
+                <div class="collapse navbar-collapse">
+                   <ul class="navbar-nav mr-auto">
+                      <li class="nav-item"></li>
+                   </ul>
+                </div>
+             </div>
+          </nav>
+          <div class="container d-flex align-items-center justify-content-center">
+             <div class="container d-flex justify-content-center align-items-center min-vh-100">
+                <div class="col-md-6">
+                   <div class="card p-4 shadow">
+                      <div class="text-center mb-3">
+                         <img src="${url.resourcesPath}/img/logo.png" alt="PlanTripAI Logo" style="width: 100px; height: auto;">
+                         <h2 class="forgot-password-main-title mt-3">${msg("emailForgotTitle")}</h2>
+                         <h2 class="forgot-password-title mt-3">${msg("emailInstruction")}</h2>
+                      </div>
+                      <form action="${url.loginAction}" method="post">
+                         <div class="form-group"><label for="username" class="forgot-password-label">${msg('username')}</label><input id="username" name="username" type="text" placeholder="Enter your ${msg('username')}" class="form-control" value=""></div>
+                         <div class="d-flex justify-content-between mt-4"><a class="forgot-password-label btn btn-link" href="${url.loginUrl}">${kcSanitize(msg('backToLogin'))?no_esc}</a><button type="submit" class="btn btn-custom-secondary">${msg('doSubmit')}</button></div>
+                      </form>
+                   </div>
+                </div>
+             </div>
+          </div>
+       </div>
     </div>
-    <!-- Content  -->
-    <q-form action="${url.loginAction}" method="post" class="full-width">
-      <div class="q-py-xs column">
-        <q-input id="username" name="username" v-model="email" filled type="text" 
-          label="${msg('email')}"
-          :error="<#if messagesPerField.existsError('username')>true<#else>false</#if>"
-          error-message="${kcSanitize(messagesPerField.getFirstError('username'))?no_esc}" 
-          :hide-bottom-space="true"
-        />
-      </div>
-      <!-- Actions -->
-      <div class="q-py-xs column items-center">
-        <!-- Submit actions -->
-        <div :class="{ 'q-pa-sm': $q.screen.xs, 'q-pa-md': $q.screen.gt.xs }">
-          <q-btn label="${msg('doSubmit')}" color="primary" :loading="resetPasswordLoading" type="submit" @click="resetPasswordLoading = true" />
-        </div>
-        <!-- back to login actions -->
-        <div>
-          <q-btn icon="las la-arrow-left" label="${kcSanitize(msg('backToLogin'))?no_esc}" color="accent" flat rounded no-caps href="${url.loginUrl}" />
-        </div>
-      </div>
-    </q-form>
-  </#if>
+
 </@layout.registrationLayout>
