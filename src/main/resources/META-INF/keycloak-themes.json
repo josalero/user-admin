@@ -5,6 +5,12 @@
 			"types": [
 				"login", "email"
 			]
+		},
+		{
+			"name": "find-job",
+			"types": [
+				"login", "email"
+			]
 		}
 	]
 }
