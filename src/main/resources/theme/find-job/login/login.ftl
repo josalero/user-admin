@@ -20,8 +20,8 @@
                              <label for="password" class="block text-sm/6 font-medium text-gray-900">Password</label>
                           </div>
                           <div class="mt-2"><input id="input-password" name="password" type="password" autocomplete="current-password" required="" placeholder="Enter your password..." class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm/6 px-3" value=""></div>
-                          <div class="text-sm"><a href="${url.loginResetCredentialsUrl} class="font-semibold text-indigo-600 hover:text-indigo-500">Forgot password?</a></div>
                         </div>
+                        <div class="text-sm"><a href="${url.loginResetCredentialsUrl} class="font-semibold text-indigo-600 hover:text-indigo-500">Forgot password?</a></div>
                         <#if messagesPerField.existsError('username','password')>
                             <div class="text-sm">${kcSanitize(messagesPerField.getFirstError('username','password'))?no_esc}</div>
                         </#if>
