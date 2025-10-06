@@ -1,5 +1,6 @@
 plugins {
     id 'java'
+    id 'application'
     id 'org.springframework.boot' version '3.3.2'
     id 'io.spring.dependency-management' version '1.1.4'
 }
@@ -7,12 +8,30 @@ plugins {
 group = 'com.josalero'
 version = '0.0.1-SNAPSHOT'
 
+// Define versions early so they can be used in configurations
+def keycloakVersion = "24.0.5"
+def infinispanVersion = "14.0.21.Final"
+def resteasyVersion = "6.2.10.Final"
+def micrometerVersion = "1.10.3"
+def liquibaseVersion = "4.28.0"
+def snakeyamlVersion = "2.6"
+def hibernateVersion = "6.2.7.Final"
+def postgresqlVersion = "42.7.1"
+def jandexVersion = "3.1.2"
+
 java {
+    sourceCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_17
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(17)
+    }
 }
 apply plugin: 'java'
 apply plugin: 'application'
 
-mainClassName = 'com.josalero.SpringbootKeycloakServerApplication'
+application {
+    mainClass = 'com.josalero.SpringbootKeycloakServerApplication'
+}
 
 jar {
     manifest {
@@ -26,23 +45,31 @@ configurations {
     compileOnly {
         extendsFrom annotationProcessor
     }
+    all {
+        resolutionStrategy {
+            // Force consistent Jandex version to avoid conflicts
+            force "io.smallrye:jandex:${jandexVersion}"
+            
+            // Exclude problematic transitive dependencies
+            eachDependency { DependencyResolveDetails details ->
+                if (details.requested.group == 'org.jboss' && details.requested.name == 'jandex') {
+                    details.useTarget group: 'io.smallrye', name: 'jandex', version: jandexVersion
+                    details.because 'Replace old jandex with newer compatible version'
+                }
+            }
+        }
+    }
 }
 
 repositories {
     mavenCentral()
 }
 
-def keycloakVersion = "24.0.5"
-def infinispanVersion = "14.0.21.Final"
-def resteasyVersion = "6.2.10.Final"
-def micrometerVersion = "1.10.3"
-def liquibaseVersion = "4.28.0"
-def snakeyamlVersion = "2.6"
-def hibernateVersion = "6.2.7.Final"
-def postgresqlVersion = "42.7.1"
-
 
 dependencies {
+    // Force correct Jandex version to resolve conflicts
+    implementation "io.smallrye:jandex:${jandexVersion}"
+    
     implementation "org.springframework.boot:spring-boot-starter-web"
     implementation "org.springframework.boot:spring-boot-starter-data-jpa"
     implementation "org.hibernate:hibernate-core:${hibernateVersion}"
@@ -53,11 +80,22 @@ dependencies {
     implementation "org.jboss.resteasy:resteasy-servlet-initializer:${resteasyVersion}"
     implementation "org.jboss.resteasy:resteasy-client:${resteasyVersion}"
     implementation "org.jboss.resteasy:resteasy-jackson2-provider:${resteasyVersion}"
-    implementation "org.keycloak:keycloak-dependencies-server-all:${keycloakVersion}"
+    
+    // Keycloak dependencies with Jandex exclusions
+    implementation("org.keycloak:keycloak-dependencies-server-all:${keycloakVersion}") {
+        exclude group: 'org.jboss', module: 'jandex'
+    }
+    implementation("org.keycloak:keycloak-crypto-default:${keycloakVersion}") {
+        exclude group: 'org.jboss', module: 'jandex'
+    }
+    implementation("org.keycloak:keycloak-admin-ui:${keycloakVersion}") {
+        exclude group: 'org.jboss', module: 'jandex'
+    }
+    implementation("org.keycloak:keycloak-rest-admin-ui-ext:${keycloakVersion}") {
+        exclude group: 'org.jboss', module: 'jandex'
+    }
+    
     implementation "org.springframework.boot:spring-boot-configuration-processor"
-    implementation "org.keycloak:keycloak-crypto-default:${keycloakVersion}"
-    implementation "org.keycloak:keycloak-admin-ui:${keycloakVersion}"
-    implementation "org.keycloak:keycloak-rest-admin-ui-ext:${keycloakVersion}"
     implementation "org.liquibase:liquibase-core:${liquibaseVersion}"
     implementation "org.snakeyaml:snakeyaml-engine:${snakeyamlVersion}"
     compileOnly 'org.projectlombok:lombok'
