@@ -18,7 +18,11 @@
                 <div class="col-md-6">
                    <div class="card p-4 shadow">
                       <div class="text-center mb-3">
-                         <img src="${url.resourcesPath}/img/logo.png" alt="PlanTripAI Logo" style="width: 100px; height: auto;">
+                         <img
+                             class="mx-auto h-14 w-auto"
+                             src="${url.resourcesPath}/img/logo.png"
+                             alt="Logo"
+                         />
                          <h2 class="forgot-password-main-title mt-3">${msg("emailForgotTitle")}</h2>
                          <h2 class="forgot-password-title mt-3">${msg("emailInstruction")}</h2>
                       </div>
