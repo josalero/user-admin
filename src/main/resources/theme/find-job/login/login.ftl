@@ -208,5 +208,34 @@
             });
         }
     });
+
+    document.addEventListener("DOMContentLoaded", function () {
+        const passwordInput = document.getElementById("password");
+        const toggle = document.getElementById("togglePassword");
+        const eyeIcon = document.getElementById("eyeIcon");
+
+        if (toggle && passwordInput) {
+            toggle.addEventListener("click", () => {
+                const isHidden = passwordInput.type === "password";
+
+                passwordInput.type = isHidden ? "text" : "password";
+
+                if (isHidden) {
+                    eyeIcon.innerHTML = `
+            <path stroke-linecap="round" stroke-linejoin="round"
+              d="M3.98 8.223C2.789 9.715 2 11.772 2 12s3.582 7 10 7c1.924 0 3.676-.33 5.174-.904M21 21l-3.5-3.5M12 5c4.478 0 8.27 2.943 9.544 7-.468 1.49-1.182 2.815-2.081 3.921M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+            <path stroke-linecap="round" stroke-linejoin="round"
+              d="M3 3l18 18" />
+          `;
+                } else {
+                    eyeIcon.innerHTML = `
+            <path stroke-linecap="round" stroke-linejoin="round"
+              d="M2.458 12C3.732 7.943 7.523 5 12 5c4.477 0 8.268 2.943 9.542 7-1.274 4.057-5.065 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+            <circle cx="12" cy="12" r="3" />
+          `;
+                }
+            });
+        }
+    });
 </script>
 </@layout.registrationLayout>
