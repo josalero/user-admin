@@ -6,7 +6,7 @@
          
          <div class="sm:mx-auto w-full">
             <img
-                class="mx-auto h-14 w-auto"
+                class="mx-auto h-14 w-auto logo-size"
                 src="${url.resourcesPath}/img/logo.png"
                 alt="Logo"
             />
@@ -34,7 +34,7 @@
                 <h3 class="text-sm font-medium text-green-900 mb-3">Step 2: Scan QR Code</h3>
                 <div class="flex flex-col items-center">
                     <div class="bg-white p-4 rounded-lg border-2 border-gray-200 mb-4">
-                        <img src="data:image/png;base64, ${totp.totpSecretQrCode}" alt="QR Code for TOTP setup" class="w-48 h-48">
+                        <img src="data:image/png;base64, ${totp.totpSecretQrCode}" alt="QR Code for TOTP setup" class="w-48 h-48 qr-size">
                     </div>
                     <p class="text-sm text-green-800 text-center">Scan this QR code with your authenticator app</p>
                 </div>
@@ -157,20 +157,74 @@ function copyToClipboard(text) {
         background-color: #f9fafb;
         font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
     }
-    
+
     #totp:focus {
         box-shadow: 0 0 0 2px rgb(37 99 235 / 0.2);
     }
-    
+
     /* Loading state for button */
     button[type="submit"]:active {
         transform: scale(0.98);
         transition: transform 0.1s;
     }
-    
+
     /* Ensure the card stands out on the background */
     .shadow-\[0_0_0_1px_rgba\(0\,0\,0\,0\.1\)\,0_4px_12px_rgba\(0\,0\,0\,0\.15\)\] {
         box-shadow: 0 0 0 1px rgba(0,0,0,0.1), 0 4px 12px rgba(0,0,0,0.15);
+    }
+
+    body .max-w-\[240px\] {
+        max-width: 420px !important;
+        width: 100% !important;
+        padding: 2rem !important;
+    }
+
+
+    body .flex.min-h-screen.flex-col.justify-center {
+        align-items: center !important;
+    }
+
+
+    body .max-w-\[240px\] h2 {
+        font-size: 1.4rem !important;
+        line-height: 1.4 !important;
+    }
+
+    body .max-w-\[240px\] p {
+        line-height: 1.6 !important;
+        font-size: 0.95rem !important;
+    }
+
+
+    body .max-w-\[240px\] > div {
+        margin-bottom: 1.5rem !important;
+    }
+    .logo-size{
+        width: 100px !important;
+        height: 80px !important;
+    }
+
+    .qr-size {
+        width: 200px !important;
+        height: 200px !important;
+    }
+
+
+    body .flex.space-x-4 {
+        display: flex !important;
+        gap: 1rem !important;
+    }
+
+    body .flex.space-x-4 button,
+    body .flex.space-x-4 a {
+        flex: 1 !important;
+    }
+
+
+    body .max-w-\[240px\] {
+        background-color: #ffffff;
+        border-radius: 12px !important;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.08) !important;
     }
 </style>
 </@layout.registrationLayout>

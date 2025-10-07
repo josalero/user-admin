@@ -33,7 +33,7 @@
                         />
                     </div>
                     
-                    <div>
+                    <div class="password-container">
                         <input 
                             id="password"
                             name="password" 
@@ -43,6 +43,14 @@
                             autocomplete="current-password"
                             class="block w-full rounded-md border-0 py-3 px-4 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm"
                         />
+                        <span class="password-toggle" id="togglePassword" tabindex="-1">
+                            <svg id="eyeIcon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                 stroke-width="1.8" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                      d="M2.458 12C3.732 7.943 7.523 5 12 5c4.477 0 8.268 2.943 9.542 7-1.274 4.057-5.065 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                                <circle cx="12" cy="12" r="3" />
+                            </svg>
+                        </span>
                     </div>
 
                     <#if realm.rememberMe && !usernameEditDisabled??>
@@ -80,7 +88,7 @@
                     </button>
                 </div>
 
-                <div class="mt-6">
+                <div class="mt-6 forgot-right">
                     <#if realm.resetPasswordAllowed>
                         <a 
                             href="${url.loginResetCredentialsUrl}" 
@@ -117,20 +125,57 @@
         background-color: #f9fafb;
         font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
     }
-    
+
     input:focus {
         box-shadow: 0 0 0 2px rgb(37 99 235 / 0.2);
     }
-    
+
     /* Loading state for button */
     button[type="submit"]:active {
         transform: scale(0.98);
         transition: transform 0.1s;
     }
-    
+
     /* Ensure the card stands out on the background */
     .shadow-\[0_0_0_1px_rgba\(0\,0\,0\,0\.1\)\,0_4px_12px_rgba\(0\,0\,0\,0\.15\)\] {
-        box-shadow: 0 0 0 1px rgba(0,0,0,0.1), 0 4px 12px rgba(0,0,0,0.15);
+        box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.1), 0 4px 12px rgba(0, 0, 0, 0.15);
+    }
+
+    /* Password toggle styles */
+    .password-container {
+        position: relative;
+    }
+
+    .password-toggle {
+        position: absolute;
+        right: 14px;
+        top: 50%;
+        transform: translateY(-50%);
+        cursor: pointer;
+        color: #6b7280;
+        width: 20px;
+        height: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .password-toggle:hover {
+        color: #2563eb;
+    }
+
+    .password-toggle svg {
+        width: 20px;
+        height: 20px;
+    }
+
+    .password-container input {
+        padding-right: 2.5rem !important;
+    }
+    /* Align forgot password link to the right */
+    .forgot-right {
+        display: block;
+        text-align: right;
     }
 </style>
 
