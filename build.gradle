@@ -71,6 +71,7 @@ dependencies {
     implementation "io.smallrye:jandex:${jandexVersion}"
     
     implementation "org.springframework.boot:spring-boot-starter-web"
+    implementation "org.springframework.boot:spring-boot-starter-actuator"
     implementation "org.springframework.boot:spring-boot-starter-data-jpa"
     implementation "org.hibernate:hibernate-core:${hibernateVersion}"
     implementation "org.hibernate.orm:hibernate-c3p0:${hibernateVersion}"
@@ -100,6 +101,8 @@ dependencies {
     implementation "org.snakeyaml:snakeyaml-engine:${snakeyamlVersion}"
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
+
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
 
 tasks.named('test') {
