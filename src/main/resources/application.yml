@@ -33,3 +33,5 @@ logging:
 
 server:
   port: ${PORT:8085}
+  # Behind Coolify / Traefik / nginx TLS: trust X-Forwarded-* so Keycloak OIDC URLs use https://
+  forward-headers-strategy: framework
